@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bootstrap 模板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-3.3.1.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/free-add.js"></script>
+ <script>
+       function refreshId(name, index){
+
+            var vals = name.split("\.");
+            var field = vals[vals.length - 1];
+            var id = "";
+            for(var i=0;i<vals.length-2; i++){
+                id += vals[i];
+            }
+            return id + "." + index + "." + field;
+        }
+      $(function(){
+        $('#test_free_adder').freeAdder({
+            index:0,
+            name:"free.adder",
+            title:"测试",
+            onInit:function (index) {
+                console.log("init", index);
+            },
+            onAdd:function (container, index) {
+                container.append(
+                    "<div class='form-group'>" +
+                        "<input class = 'form-control free-item' value='test001' id='"+"test."+ index +".name' >" +
+                    "</div>");
+                console.log("addItem", index);
+            },
+            onRefreshItem : function (ele, index) {
+              ele.find(".free-item").each(function (i, t) {
+                   var id  = t.id;
+                   var name = t.name;
+                   t.id = refreshId(id, index);
+               })
+                console.log("onItem", index);
+            },
+            onDel: function (index) {
+                console.log("onDel", index);
+            }
+
+         });
+     });    
+    </script>
+   
+</head>
+<body>
+<h1>Hello, world!</h1>
+<ul>
+    <li>
+        <ul>
+            <li>123</li>
+            <li>123</li>
+        </ul>
+    </li>
+</ul>
+<div>
+    <form>
+        <ul>
+            <li>456</li>
+            <li>789</li>
+        </ul>
+    </form>
+</div>
+<div id="test_free_adder">
+
+
+</div>
+
+
+</body>
+</html>
