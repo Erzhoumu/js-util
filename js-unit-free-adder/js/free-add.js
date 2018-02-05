@@ -61,14 +61,15 @@
             var el = this;
 
             container.append("<div id='" + name + "-item." + index +"' class='"+ this._getItemName() +"'>"+
-                title +
-                "<button class=' btn-danger " + name + "-delBtn'" + "  type='button'>删除</button>" +
+                title + this.settings.index +
+                "<button class=' btn-danger " + name + "-delBtn'" + " index='"+ index + "' type='button'>删除</button>" +
                 "<div class='" + name + "-data'></div>" +
                 "</div>");
 
             var delBtn = this._getDelBtn(index);
             delBtn.on("click", function(){
-                el._del(index);
+                var i = $(this).attr("index");
+                el._del(i);
             });
             var widget = this._getDataContainer(index);
             this.settings.onAdd.call(this.element, widget, index);
@@ -89,6 +90,8 @@
             items.each(function (i, item) {
                 item.id = widget._setItemId(i);
                 var container = widget._getDataContainer(i);
+                var delBtn = widget._getDelBtn(i);
+                delBtn.attr("index",i);
                 widget.settings.onRefreshItem.call(item.element, container, i);
             });
             this.settings.onDel.call(this.element, index);
