@@ -20,8 +20,9 @@
             var id = "";
             for(var i=0;i<vals.length-2; i++){
                 id += vals[i];
+                id += "."
             }
-            return id + "." + index + "." + field;
+            return id + index + "." + field;
         }
       $(function(){
         $('#test_free_adder').freeAdder({
